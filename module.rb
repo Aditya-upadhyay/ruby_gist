@@ -11,4 +11,16 @@ class Module
     end
     all_klasses
   end
+
+  def children_modules
+    all_modules = [] 
+    modules = constants.collect { |c| const_get(c) }.
+    select { |m| m.instance_of?(Module) }
+    modules.each do |child|
+      all_modules << child
+      all_modules += child.children_modules
+    end
+    all_modules
+ 
+  end
 end
