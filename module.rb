@@ -21,6 +21,13 @@ class Module
       all_modules += child.children_modules
     end
     all_modules
- 
+  end
+
+  def children_methods
+    all_methods = methods(false)
+    (children_modules + children_classes).each do |obj|
+      all_methods += obj.methods(false)
+    end
+    all_methods
   end
 end
