@@ -22,12 +22,11 @@ class Module
     end
     all_modules
   end
-
-  def children_methods
-    all_methods = methods(false)
-    (children_modules + children_classes).each do |obj|
-      all_methods += obj.methods(false)
-    end
-    all_methods
+  
+  def cherrypick_methods module_name, *method_names
+    include module_name
+    module_name.instance_methods.each do |m|
+      undef_method m unless method_names.include?(m)
+    end      
   end
 end
